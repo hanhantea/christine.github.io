@@ -693,10 +693,12 @@
     .nav-links { gap: 1.5rem; }
     .nav-links a { font-size: .7rem; letter-spacing: .1em; }
 
-    /* Hero */
+    /* Hero — align with nav at 5vw */
     .hero { padding-top: 7rem; padding-bottom: 2rem; }
     .hero-inner {
-      padding-right: 4vw;
+      width: 100%;
+      padding-left: 5vw;
+      padding-right: 5vw;
       flex-direction: column;
       align-items: flex-start;
     }
@@ -712,6 +714,9 @@
       right: 5vw;
     }
     .norigae { display: none; }
+
+    /* Silk ribbon — tuck under shorter tablet nav */
+    .silk-ribbon svg { top: 44px; }
 
     /* Experience */
     .work-header { padding: 0 6vw; gap: 1.5rem; }
@@ -807,13 +812,14 @@
     /* Lower connector z-index so it renders behind photos & content on mobile */
     #route-svg { z-index: 1; }
 
-    /* Silk ribbon — show on mobile, scaled down */
+    /* Silk ribbon — show on mobile, snug under nav */
     .silk-ribbon {
       display: block;
-      height: 80px;
+      height: 90px;
+      top: 0;
     }
     .silk-ribbon svg {
-      top: 36px;
+      top: 40px;
       height: 44px;
     }
 
@@ -890,9 +896,9 @@
     .about-text h2 { font-size: 1.5rem; }
     footer h2 { font-size: 1.5rem; }
 
-    /* Silk ribbon — even more compact */
-    .silk-ribbon { height: 60px; }
-    .silk-ribbon svg { top: 28px; height: 34px; }
+    /* Silk ribbon — compact, snug under nav */
+    .silk-ribbon { height: 80px; }
+    .silk-ribbon svg { top: 36px; height: 34px; }
   }
 </style>
 </head>
