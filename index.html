@@ -167,7 +167,7 @@
     width: min(1120px, 90vw);
     margin: 0 auto;
     padding-left: 4vw;
-    padding-right: clamp(260px, 32vw, 420px);
+    padding-right: clamp(300px, 40vw, 500px);
     min-height: 62vh;
     display: flex;
     align-items: center;
@@ -570,7 +570,8 @@
   .photo-collage {
     position: relative;
     width: 100%;
-    aspect-ratio: 3/4;
+    aspect-ratio: 5/9;
+    overflow: hidden;
   }
   .photo-collage .collage-img {
     position: absolute;
@@ -660,9 +661,9 @@
   }
 
   /* ============================
-     TABLET — max 900px
+     TABLET — max 1200px
      ============================ */
-  @media (max-width: 900px) {
+  @media (max-width: 1200px) {
     /* Nav */
     nav { padding: 1.2rem 5vw; }
     .nav-links { gap: 1.5rem; }
@@ -768,7 +769,7 @@
     .hero-photo-wrap {
       position: relative;
       right: auto; top: auto; transform: none;
-      width: min(65vw, 280px);
+      width: min(55vw, 250px);
       margin-top: 1.5rem;
       align-self: center;
     }
@@ -811,7 +812,7 @@
     /* About — prevent photo overflow, taller collage to show bottom images */
     .about-section { padding: 3vh 5vw; gap: 2rem; }
     .about-photos { max-width: 100%; }
-    .photo-collage { aspect-ratio: 5/11; overflow: hidden; border-radius: 4px; }
+    .photo-collage { aspect-ratio: 5/12; overflow: hidden; border-radius: 4px; }
     .about-text h2 { font-size: 1.8rem; }
     .about-text p { font-size: .85rem; }
     .pull-quote { font-size: 1rem; }
@@ -859,7 +860,7 @@
     .nav-links a { font-size: .58rem; letter-spacing: .06em; }
     .logo-en { font-size: 0.68rem; margin-left: 0.3rem; }
     .hero-title { font-size: 1.6rem; }
-    .hero-photo-wrap { width: min(70vw, 240px); }
+    .hero-photo-wrap { width: min(55vw, 220px); }
     .about-text h2 { font-size: 1.5rem; }
     footer h2 { font-size: 1.5rem; }
 
@@ -2194,7 +2195,7 @@ if (showMoreBtn) {
 // Initial check
 updateShowMore();
 
-// ===== PHOTO COLLAGE =====
+// ===== PHOTO COLLAGE — scroll-triggered row-by-row reveal =====
 (function() {
   const collage = document.getElementById('photo-collage');
   if (!collage) return;
@@ -2216,31 +2217,76 @@ updateShowMore();
     [48, 76,  40, -2.5,11]
   ];
 
-  let loadedCount = 0;
+  // Group images into rows of 2
+  const rows = [];
+  for (let r = 0; r < positions.length; r += 2) {
+    rows.push([r, r + 1].filter(i => i < imgs.length));
+  }
+
+  // Track which images have loaded
+  const loaded = new Array(imgs.length).fill(false);
+  let animationTriggered = false;
 
   imgs.forEach((img, i) => {
     const pos = positions[i] || [0, 0, 40, 0, 1];
-    img.style.left     = pos[0] + '%';
-    img.style.top      = pos[1] + '%';
-    img.style.width    = pos[2] + '%';
-    img.style.transform = 'rotate(' + pos[3] + 'deg)';
-    img.style.zIndex   = pos[4];
+    const finalRotation = pos[3];
+    img.style.left       = pos[0] + '%';
+    img.style.top        = pos[1] + '%';
+    img.style.width      = pos[2] + '%';
+    img.style.zIndex     = pos[4];
     img.style.aspectRatio = '4/5';
-    img.style.opacity  = '0';
+    // Start hidden and shifted down; store final rotation for the reveal
+    img.style.opacity    = '0';
+    img.style.transform  = 'rotate(' + finalRotation + 'deg) translateY(32px)';
+    img.style.transition = 'opacity 1s ease-out, transform 1s ease-out';
+    img.dataset.finalRotation = finalRotation;
 
-    function show() {
-      loadedCount++;
-      img.style.opacity = '1';
-      if (placeholder && loadedCount >= 1) placeholder.style.display = 'none';
+    function markLoaded() {
+      loaded[i] = true;
+      if (placeholder && loaded.some(Boolean)) placeholder.style.display = 'none';
+      // If animation already triggered, reveal immediately if this row's turn has passed
+      if (animationTriggered) revealRows();
     }
 
     if (img.complete && img.naturalWidth > 0) {
-      show();
+      markLoaded();
     } else {
-      img.addEventListener('load', show);
+      img.addEventListener('load', markLoaded);
       img.addEventListener('error', () => { img.style.display = 'none'; });
     }
   });
+
+  // Reveal rows one by one with staggered delay
+  const revealed = new Array(imgs.length).fill(false);
+  function revealRows() {
+    rows.forEach((rowIndices, rowIdx) => {
+      const delay = rowIdx * 400; // 400ms stagger between rows
+      rowIndices.forEach((imgIdx, colIdx) => {
+        if (revealed[imgIdx]) return; // already scheduled
+        const img = imgs[imgIdx];
+        if (!loaded[imgIdx]) return; // not loaded yet — will retry when it loads
+        revealed[imgIdx] = true;
+        const t = delay + colIdx * 120; // slight left-right offset within a row
+        setTimeout(() => {
+          img.style.opacity   = '1';
+          img.style.transform = 'rotate(' + img.dataset.finalRotation + 'deg) translateY(0)';
+        }, t);
+      });
+    });
+  }
+
+  // Use IntersectionObserver to trigger the reveal when collage scrolls into view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !animationTriggered) {
+        animationTriggered = true;
+        revealRows();
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.15 });
+
+  observer.observe(collage);
 })();
 
 </script>
