@@ -778,6 +778,8 @@
       opacity: 0.35;
     }
     .hero-line { display: none; }
+    /* Lower connector z-index so it renders behind photos & content on mobile */
+    #route-svg { z-index: 1; }
 
     /* Silk ribbon — show on mobile, scaled down */
     .silk-ribbon {
@@ -806,10 +808,10 @@
     /* Lattice */
     .lattice-frame { height: 40px; }
 
-    /* About — prevent photo overflow */
+    /* About — prevent photo overflow, taller collage to show bottom images */
     .about-section { padding: 3vh 5vw; gap: 2rem; }
     .about-photos { max-width: 100%; }
-    .photo-collage { aspect-ratio: 3/4; overflow: hidden; border-radius: 4px; }
+    .photo-collage { aspect-ratio: 5/11; overflow: hidden; border-radius: 4px; }
     .about-text h2 { font-size: 1.8rem; }
     .about-text p { font-size: .85rem; }
     .pull-quote { font-size: 1rem; }
