@@ -6,8 +6,10 @@
 <title>Christine Han</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+KR:wght@200;300;400;500;600&family=Karla:wght@300;400;500&display=optional">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+KR:wght@200;300;400;500;600&family=Karla:wght@300;400;500&display=optional">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Karla:wght@300;400;500&display=optional">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Karla:wght@300;400;500&display=optional">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600&display=swap">
 <link rel="preload" as="image" href="assets/images/living-1.jpg">
 <link rel="preload" as="image" href="assets/images/living-2.jpg">
 <link rel="preload" as="image" href="assets/images/living-3.jpg">
@@ -178,10 +180,10 @@
     max-width: 34rem;
   }
   .hero-label {
-    font-family: 'Noto Serif KR', serif;
-    font-weight: 300; font-size: 0.82rem;
+    font-family: 'Karla', sans-serif;
+    font-weight: 400; font-size: 0.75rem;
     color: var(--persimmon);
-    letter-spacing: 0.18em;
+    letter-spacing: 0.14em;
     margin-bottom: 1rem;
     opacity: 0; animation: fadeUp .6s ease .1s forwards;
   }
@@ -190,6 +192,7 @@
     font-weight: 400;
     font-size: clamp(2.5rem, 4.4vw, 4.4rem);
     line-height: 1.1;
+    text-indent: -0.04em;
     opacity: 0; animation: fadeUp .7s ease .25s forwards;
   }
   .hero-title .name-accent { color: var(--persimmon); }
@@ -289,23 +292,24 @@
   .work-header {
     padding: 0 10vw;
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 3rem;
+    grid-template-columns: auto auto 1fr;
+    gap: 1.5rem;
     align-items: end;
     margin-bottom: 4rem;
   }
   .work-header-kr {
     font-family: 'Noto Serif KR', serif;
     font-weight: 200;
-    font-size: clamp(4rem, 8vw, 8rem);
+    font-size: clamp(3rem, 6vw, 3.5rem);
     color: var(--hanji-warm);
     line-height: 1;
   }
   .work-header-en {
     font-family: 'Playfair Display', serif;
-    font-weight: 400; font-size: 2rem;
-    padding-bottom: 0.8rem;
+    font-weight: 400; font-size: 1.8rem;
+    padding-bottom: 0.3rem;
   }
+  .work-header-line { height: 1px; background: var(--hanji-warm); align-self: center; }
 
   /* The road container */
   .silk-road {
@@ -385,15 +389,24 @@
     font-size: 1.3rem;
     line-height: 1.4;
     color: var(--ink);
+    text-indent: -0.03em;
     transition: color 0.3s;
   }
   .exp-stop:hover .exp-role { color: var(--ink); }
   .exp-company {
-    font-family: 'Noto Serif KR', serif;
-    font-weight: 300;
-    font-size: 0.95rem;
-    color: var(--ink-soft);
-    margin-top: 0.25rem;
+    font-family: 'Karla', sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    color: var(--warm-gray);
+    margin-top: 0.3rem;
+  }
+  .exp-tag {
+    font-family: 'Karla', sans-serif;
+    font-size: 0.68rem;
+    font-style: italic;
+    color: var(--warm-gray);
+    margin-left: 0.5rem;
   }
   /* Right-aligned stops: right-align the text */
   .exp-stop-2 .exp-card,
@@ -498,7 +511,7 @@
     display: flex; gap: 2rem; margin-bottom: 3rem;
   }
   .writing-tab {
-    font-family: 'Karla', sans-serif; font-size: .82rem; font-weight: 400;
+    font-family: 'Karla', sans-serif; font-size: .8rem; font-weight: 400;
     letter-spacing: .1em; text-transform: lowercase;
     color: var(--taupe); background: none; border: none;
     padding: 0.4rem 0; position: relative; cursor: none !important;
@@ -531,15 +544,15 @@
   }
   .essay:hover { padding-left: 1.2rem; }
   .essay-num { font-family: 'Noto Serif KR', serif; font-weight: 200; font-size: 1.8rem; color: var(--wood-light); }
-  .essay h3 { font-family: 'Playfair Display', serif; font-weight: 400; font-size: 1.3rem; transition: color .3s; }
+  .essay h3 { font-family: 'Playfair Display', serif; font-weight: 400; font-size: 1.3rem; text-indent: -0.03em; transition: color .3s; }
   .essay:hover h3 { color: var(--persimmon); }
-  .essay .date { font-size: .72rem; color: var(--taupe); letter-spacing: .08em; white-space: nowrap; }
-  .essay .essay-tag { font-size: .65rem; color: var(--celadon); letter-spacing: .08em; text-transform: uppercase; }
+  .essay .date { font-size: .75rem; color: var(--taupe); letter-spacing: .08em; white-space: nowrap; }
+  .essay .essay-tag { font-size: .68rem; color: var(--celadon); letter-spacing: .08em; text-transform: uppercase; }
 
   /* Show more / show less */
   .writing-show-more {
     display: inline-block; margin-top: 2rem;
-    font-family: 'Karla', sans-serif; font-size: .78rem;
+    font-family: 'Karla', sans-serif; font-size: .75rem;
     letter-spacing: .1em; color: var(--persimmon);
     background: none; border: none; cursor: none !important;
     transition: opacity .3s;
@@ -637,6 +650,7 @@
     font-family: 'Playfair Display', serif;
     font-weight: 400; font-size: 2.8rem;
     line-height: 1.15; margin-bottom: 0.5rem;
+    text-indent: -0.04em;
   }
   .about-text .sub-kr {
     font-family: 'Noto Serif KR', serif;
@@ -830,12 +844,13 @@
       padding: 0 5vw;
       margin-bottom: 2rem;
     }
-    .work-header-kr { font-size: clamp(3rem, 10vw, 5rem); }
-    .work-header-en { font-size: 1.4rem; }
+    .work-header-kr { font-size: clamp(2.4rem, 10vw, 3.5rem); }
+    .work-header-en { font-size: 1.3rem; }
+    .work-header-line { display: none; }
     .silk-road { width: 100vw; padding: 1rem 0; }
     .exp-stop .exp-card { padding: 1rem 5vw; }
     .exp-role { font-size: 1.1rem; }
-    .exp-company { font-size: .85rem; }
+    .exp-company { font-size: .72rem; }
 
     /* Lattice */
     .lattice-frame { height: 40px; }
@@ -1215,6 +1230,7 @@
   <div class="work-header reveal">
     <span class="work-header-kr">경험</span>
     <span class="work-header-en">Experience</span>
+    <div class="work-header-line"></div>
   </div>
 
   <div class="silk-road">
@@ -1230,7 +1246,7 @@
         <div class="exp-wash"></div>
         <div class="exp-marker"></div>
         <div class="exp-date">2026</div>
-        <div class="exp-role">Technical Recruiter / Product <span style="font-family:'Karla',sans-serif; font-size:0.72rem; font-style:italic; color:var(--warm-gray); margin-left:0.4rem;">current</span></div>
+        <div class="exp-role">Technical Recruiter / Product <span class="exp-tag">current</span></div>
         <div class="exp-company">Greptile</div>
       </div>
     </div>
@@ -1252,7 +1268,7 @@
         <div class="exp-wash"></div>
         <div class="exp-marker"></div>
         <div class="exp-date">2025</div>
-        <div class="exp-role">Marketing Lead <span style="font-family:'Karla',sans-serif; font-size:0.72rem; font-style:italic; color:var(--warm-gray); margin-left:0.4rem;">contract</span></div>
+        <div class="exp-role">Marketing Lead <span class="exp-tag">contract</span></div>
         <div class="exp-company">Avocado</div>
       </div>
     </div>
